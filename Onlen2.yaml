@@ -1,0 +1,16 @@
+proxies:
+#========= Vlwss WS ========= 
+- name: Vless-WS
+  type: vless
+  server: host.com
+  port: 443
+  uuid: 2a3647c2-10c5-4e54-8706-299c49ea35d6
+  udp: true
+  skip-cert-verify: true
+  tls: true
+  servername: bug.com
+  network: ws
+  ws-opts:
+    path: "/path"
+  # headers: bug.com
+ #untuk metode vless format samain kaya di sub.bond id atau copas dari sana aja#
