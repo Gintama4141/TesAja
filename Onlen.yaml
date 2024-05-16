@@ -1,16 +1,115 @@
 proxies:
-#========= Vlwss WS ========= 
-- name: Vless-WS
-  type: vless
-  server: host.com
-  port: 443
-  uuid: 2a3647c2-10c5-4e54-8706-299c49ea35d6
-  udp: true
-  skip-cert-verify: true
-  tls: true
-  servername: bug.com
-  network: ws
-  ws-opts:
-    path: "/path"
-  # headers: bug.com
- #untuk metode vless format samain kaya di sub.bond id atau copas dari sana aja#
+  - name: United States of America 40
+    server: 104.18.56.56
+    port: 443
+    type: vless
+    uuid: de44b044-8f90-4e18-b742-16591667ff96
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: edgetunnel-free.pages.dev
+    network: ws
+    ws-opts:
+      path: /vless
+      headers:
+        Host: edgetunnel-free.pages.dev
+    udp: true
+  - name: United States of America 42
+    server: 104.18.56.56
+    port: 443
+    type: vless
+    uuid: bf7e1009-1574-44f7-86df-6cbecd338477
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: pardazeshvpn-tg18.pages.dev
+    network: ws
+    ws-opts:
+      path: /?ed
+      headers:
+        Host: pardazeshvpn-tg18.pages.dev
+    udp: true
+  - name: United States of America 46
+    server: 104.18.56.56
+    port: 443
+    type: vless
+    uuid: bf7e1009-1574-44f7-86df-6cbecd338477
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: pardazeshvpn-tg18.pages.dev
+    network: ws
+    ws-opts:
+      path: /?ed
+      headers:
+        Host: pardazeshvpn-tg18.pages.dev
+    udp: true
+  - name: United States of America 525
+    server: 104.18.56.56
+    port: 443
+    type: vless
+    uuid: c32b1429-92aa-4be7-912e-4d63b0a31fc7
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: can01.nimserver.top
+    network: grpc
+    grpc-opts:
+      grpc-service-name: vless-grpc
+    udp: true
+  - name: United States of America 541
+    server: 104.18.56.56
+    port: 443
+    type: vless
+    uuid: c32b1429-92aa-4be7-912e-4d63b0a31fc7
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: can01.nimserver.top
+    network: grpc
+    grpc-opts:
+      grpc-service-name: vless-grpc
+    udp: true
+  - name: United States of America 585
+    server: 104.18.56.56
+    port: 443
+    type: vless
+    uuid: c32b1429-92aa-4be7-912e-4d63b0a31fc7
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: can01.nimserver.top
+    network: grpc
+    grpc-opts:
+      grpc-service-name: vless-grpc
+    udp: true
+  - name: Singapore 53
+    server: 104.18.56.56
+    port: 443
+    type: vless
+    uuid: 978e6fa3-4cc2-47fc-8746-586e5874e713
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: sg-full.privateip.net
+    network: ws
+    ws-opts:
+      path: /VLESS
+      headers:
+        Host: sg-full.privateip.net
+    udp: true
+  - name: Singapore 54
+    server: 104.18.56.56
+    port: 443
+    type: vless
+    uuid: b510239f-d6ca-40e9-aa5e-63d0a45e5a74
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: sg2-full.privateip.net
+    network: ws
+    ws-opts:
+      path: /VLESS
+      headers:
+        Host: sg2-full.privateip.net
+    udp: true
