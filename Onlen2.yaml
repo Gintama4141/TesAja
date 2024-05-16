@@ -1,16 +1,31 @@
 proxies:
-#========= Vlwss WS ========= 
-- name: Vless-WS
-  type: vless
-  server: host.com
-  port: 443
-  uuid: 2a3647c2-10c5-4e54-8706-299c49ea35d6
-  udp: true
-  skip-cert-verify: true
-  tls: true
-  servername: bug.com
-  network: ws
-  ws-opts:
-    path: "/path"
-  # headers: bug.com
- #untuk metode vless format samain kaya di sub.bond id atau copas dari sana aja#
+  - name: Singapore 53
+    server: 104.18.56.56
+    port: 443
+    type: vless
+    uuid: 978e6fa3-4cc2-47fc-8746-586e5874e713
+    cipher: auto
+    tls: true
+    udp: true
+    skip-cert-verify: true
+    network: ws
+    servername: sg-full.privateip.net
+    ws-opts:
+      path: /VLESS
+      headers:
+        Host: sg-full.privateip.net
+  - name: Singapore 54
+    server: 104.18.56.56
+    port: 443
+    type: vless
+    uuid: b510239f-d6ca-40e9-aa5e-63d0a45e5a74
+    cipher: auto
+    tls: true
+    udp: true
+    skip-cert-verify: true
+    network: ws
+    servername: sg2-full.privateip.net
+    ws-opts:
+      path: /VLESS
+      headers:
+        Host: sg2-full.privateip.net
