@@ -1,0 +1,46 @@
+ {
+      "type": "vless",
+      "tag": "Singapore 53",
+      "server": "104.18.56.56",
+      "server_port": 443,
+      "uuid": "978e6fa3-4cc2-47fc-8746-586e5874e713",
+      "tls": {
+        "enabled": true,
+        "server_name": "sg-full.privateip.net",
+        "ech": {},
+        "utls": {},
+        "reality": {},
+        "insecure": true,
+        "disable_sni": false
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/VLESS",
+        "headers": {
+          "Host": "sg-full.privateip.net"
+        }
+      }
+    },
+    {
+      "type": "vless",
+      "tag": "Singapore 54",
+      "server": "104.18.56.56",
+      "server_port": 443,
+      "uuid": "b510239f-d6ca-40e9-aa5e-63d0a45e5a74",
+      "tls": {
+        "enabled": true,
+        "server_name": "sg2-full.privateip.net",
+        "ech": {},
+        "utls": {},
+        "reality": {},
+        "insecure": true,
+        "disable_sni": false
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/VLESS",
+        "headers": {
+          "Host": "sg2-full.privateip.net"
+        }
+      }
+    }
