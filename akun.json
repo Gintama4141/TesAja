@@ -1,46 +1,490 @@
- {
-      "type": "vless",
-      "tag": "Singapore 53",
-      "server": "104.18.56.56",
-      "server_port": 443,
-      "uuid": "978e6fa3-4cc2-47fc-8746-586e5874e713",
-      "tls": {
-        "enabled": true,
-        "server_name": "sg-full.privateip.net",
-        "ech": {},
-        "utls": {},
-        "reality": {},
-        "insecure": true,
-        "disable_sni": false
+{
+  "log": {
+    "level": "info",
+    "output": "box.log",
+    "timestamp": true
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "Internet-dns",
+        "address": "tcp://1.0.0.1",
+        "strategy": "ipv4_only",
+        "detour": "Internet"
       },
-      "transport": {
-        "type": "ws",
-        "path": "/VLESS",
-        "headers": {
-          "Host": "sg-full.privateip.net"
-        }
+      {
+        "tag": "Best Latency-dnsID",
+        "address": "tcp://1.0.0.1",
+        "strategy": "ipv4_only",
+        "detour": "ID"
+      },
+      {
+        "tag": "Best Latency-dnsSG",
+        "address": "tcp://1.0.0.1",
+        "strategy": "ipv4_only",
+        "detour": "SG"
+      },
+      {
+        "tag": "Sosmed-dns",
+        "address": "tcp://1.0.0.1",
+        "strategy": "ipv4_only",
+        "detour": "Sosmed"
+      },
+      {
+        "tag": "Streaming-dns",
+        "address": "tcp://1.0.0.1",
+        "strategy": "ipv4_only",
+        "detour": "Streaming"
+      },
+      {
+        "tag": "Route Port Game-dns",
+        "address": "tcp://1.0.0.1",
+        "strategy": "ipv4_only",
+        "detour": "Route Port Game"
+      },
+      {
+        "tag": "direct-dns",
+        "address": "local",
+        "strategy": "ipv4_only",
+        "detour": "direct"
+      },
+      {
+        "tag": "block-dns",
+        "address": "rcode://success"
       }
+    ],
+    "rules": [
+      {
+        "domain_suffix": [
+          ".arpa.",
+          ".arpa"
+        ],
+        "server": "block-dns",
+        "rewrite_ttl": 20
+      },
+      {
+        "domain_suffix": [
+          "id5.tunnelx.cloud",
+          "id5.tunnelx.cloud",
+          "id5.tunnelx.cloud",
+          "sg4.nekotun.com",
+          "sg4.nekotun.com",
+          "sg4.nekotun.com"
+        ],
+        "server": "direct-dns",
+        "rewrite_ttl": 20
+      },
+      {
+        "network": "udp",
+        "port": 443,
+        "server": "block-dns",
+        "rewrite_ttl": 20
+      },
+      {
+        "geosite": "rule-malicious",
+        "server": "block-dns",
+        "rewrite_ttl": 20
+      },
+      {
+        "outbound": "Internet",
+        "server": "Internet-dns",
+        "rewrite_ttl": 20
+      },
+      {
+        "outbound": "ID",
+        "server": "Best Latency-dnsID",
+        "rewrite_ttl": 20
+      },
+      {
+        "outbound": "SG",
+        "server": "Best Latency-dnsSG",
+        "rewrite_ttl": 20
+      },
+      {
+        "outbound": "Sosmed",
+        "server": "Sosmed-dns",
+        "rewrite_ttl": 20
+      },
+      {
+        "outbound": "Streaming",
+        "server": "Streaming-dns",
+        "rewrite_ttl": 20
+      },
+      {
+        "outbound": "Route Port Game",
+        "server": "Route Port Game-dns",
+        "rewrite_ttl": 20
+      },
+      {
+        "outbound": "direct",
+        "server": "direct-dns",
+        "rewrite_ttl": 20
+      },
+      {
+        "outbound": "any",
+        "server": "direct-dns",
+        "rewrite_ttl": 20
+      }
+    ],
+    "reverse_mapping": true,
+    "strategy": "ipv4_only",
+    "disable_cache": true,
+    "independent_cache": true
+  },
+  "inbounds": [
+    {
+      "type": "tun",
+      "tag": "tun-in",
+      "interface_name": "tun0",
+      "mtu": 9000,
+      "inet4_address": "172.19.0.1/30",
+      "auto_route": true,
+      "strict_route": true,
+      "endpoint_independent_nat": true,
+      "stack": "system",
+      "sniff": true
+    },
+    {
+      "type": "mixed",
+      "tag": "mixed-in",
+      "listen": "0.0.0.0",
+      "listen_port": 2080,
+      "sniff": true
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "selector",
+      "tag": "Internet",
+      "outbounds": [
+        "ID",
+        "SG"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "Option ADs",
+      "outbounds": [
+        "block",
+        "Internet"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "Sosmed",
+      "outbounds": [
+        "ID",
+        "SG"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "Streaming",
+      "outbounds": [
+        "ID",
+        "SG"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "Route Port Game",
+      "outbounds": [
+        "ID",
+        "SG"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "Option ADs",
+      "outbounds": [
+        "block",
+        "Internet"
+      ]
+    },
+    {
+      "type": "urltest",
+      "tag": "ID",
+      "outbounds": [
+        "ID1",
+        "ID2",
+        "ID3"
+      ],
+      "url": "http://www.gstatic.com/generate_204",
+      "interval": "1m",
+      "tolerance": 20
+    },
+    {
+      "type": "urltest",
+      "tag": "SG",
+      "outbounds": [
+        "SG1",
+        "SG2",
+        "SG3"
+      ],
+      "url": "http://www.gstatic.com/generate_204",
+      "interval": "1m",
+      "tolerance": 20
     },
     {
       "type": "vless",
-      "tag": "Singapore 54",
-      "server": "104.18.56.56",
+      "tag": "ID1",
+      "domain_strategy": "ipv4_only",
+      "server": "img.email3.vidio.com",
       "server_port": 443,
-      "uuid": "b510239f-d6ca-40e9-aa5e-63d0a45e5a74",
+      "uuid": "6259c090-0683-4e76-b830-c65216276929",
       "tls": {
         "enabled": true,
-        "server_name": "sg2-full.privateip.net",
-        "ech": {},
-        "utls": {},
-        "reality": {},
-        "insecure": true,
-        "disable_sni": false
+        "server_name": "id5.tunnelx.cloud",
+        "insecure": true
+      },
+      "multiplex": {
+        "protocol": "smux",
+        "max_streams": 32
       },
       "transport": {
         "type": "ws",
-        "path": "/VLESS",
+        "path": "/vless",
         "headers": {
-          "Host": "sg2-full.privateip.net"
-        }
+          "Host": "id5.tunnelx.cloud"
+        },
+        "early_data_header_name": "Sec-WebSocket-Protocol"
+      },
+      "packet_encoding": "xudp"
+    },
+    {
+      "type": "vless",
+      "tag": "ID2",
+      "domain_strategy": "ipv4_only",
+      "server": "img.email3.vidio.com",
+      "server_port": 80,
+      "uuid": "6259c090-0683-4e76-b830-c65216276929",
+      "multiplex": {
+        "protocol": "smux",
+        "max_streams": 32
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/vless",
+        "headers": {
+          "Host": "id5.tunnelx.cloud"
+        },
+        "early_data_header_name": "Sec-WebSocket-Protocol"
+      },
+      "packet_encoding": "xudp"
+    },
+    {
+      "type": "vless",
+      "tag": "ID3",
+      "domain_strategy": "ipv4_only",
+      "server": "img.email3.vidio.com",
+      "server_port": 443,
+      "uuid": "6259c090-0683-4e76-b830-c65216276929",
+      "tls": {
+        "enabled": true,
+        "server_name": "id5.tunnelx.cloud",
+        "insecure": true
+      },
+      "multiplex": {
+        "protocol": "smux",
+        "max_streams": 32
+      },
+      "transport": {
+        "type": "grpc",
+        "service_name": "vless",
+        "idle_timeout": "15s",
+        "ping_timeout": "15s"
+      },
+      "packet_encoding": "xudp"
+    },
+    {
+      "type": "vmess",
+      "tag": "SG1",
+      "domain_strategy": "ipv4_only",
+      "server": "img.email3.vidio.com",
+      "server_port": 443,
+      "uuid": "c26ea2b7-c1d9-4359-848b-661d9a4dbb9d",
+      "security": "auto",
+      "authenticated_length": true,
+      "tls": {
+        "enabled": true,
+        "server_name": "sg4.nekotun.com",
+        "insecure": true
+      },
+      "multiplex": {
+        "protocol": "smux",
+        "max_streams": 32
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/vmess",
+        "headers": {
+          "Host": "sg4.nekotun.com"
+        },
+        "early_data_header_name": "Sec-WebSocket-Protocol"
       }
+    },
+    {
+      "type": "vmess",
+      "tag": "SG2",
+      "domain_strategy": "ipv4_only",
+      "server": "img.email3.vidio.com",
+      "server_port": 443,
+      "uuid": "c26ea2b7-c1d9-4359-848b-661d9a4dbb9d",
+      "security": "auto",
+      "authenticated_length": true,
+      "tls": {
+        "enabled": true,
+        "server_name": "sg4.nekotun.com",
+        "insecure": true
+      },
+      "multiplex": {
+        "protocol": "smux",
+        "max_streams": 32
+      },
+      "transport": {
+        "type": "grpc",
+        "service_name": "vmess",
+        "idle_timeout": "15s",
+        "ping_timeout": "15s"
+      }
+    },
+    {
+      "type": "vmess",
+      "tag": "SG3",
+      "domain_strategy": "ipv4_only",
+      "server": "img.email3.vidio.com",
+      "server_port": 80,
+      "uuid": "c26ea2b7-c1d9-4359-848b-661d9a4dbb9d",
+      "security": "auto",
+      "authenticated_length": true,
+      "multiplex": {
+        "protocol": "smux",
+        "max_streams": 32
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/vmess",
+        "headers": {
+          "Host": "sg4.nekotun.com"
+        },
+        "early_data_header_name": "Sec-WebSocket-Protocol"
+      }
+    },
+    {
+      "type": "direct",
+      "tag": "direct"
+    },
+    {
+      "type": "block",
+      "tag": "block"
+    },
+    {
+      "type": "dns",
+      "tag": "dns-out"
+    }
+  ],
+  "route": {
+    "geoip": {
+      "download_url": "https://github.com/malikshi/sing-box-geo/releases/latest/download/geoip.db",
+      "download_detour": "SG"
+    },
+    "geosite": {
+      "download_url": "https://github.com/malikshi/v2ray-rules-dat/releases/latest/download/geosite.db",
+      "download_detour": "SG"
+    },
+    "rules": [
+      {
+        "port": 53,
+        "outbound": "dns-out"
+      },
+      {
+        "network": "udp",
+        "port": 443,
+        "outbound": "block"
+      },
+      {
+        "domain_suffix": "google.com",
+        "outbound": "Internet"
+      },
+      {
+        "domain_keyword": [
+          "terabox.com",
+          "terabox.fun",
+          "teraboxapp.com",
+          "d0000d.com",
+          "dooood.com",
+          "d000d.com",
+          "doods.pro",
+          "do0d.co",
+          "dood.re",
+          "do0od.com",
+          "doodf.com",
+          "doobs.pro",
+          "poop.com",
+          "pay4fans.com",
+          "ds2play.com",
+          "filemoon.sx"
+        ],
+        "outbound": "Streaming"
+      },
+      {
+        "geosite": [
+          "rule-ads",
+          "oisd-full",
+          "rule-malicious"
+        ],
+        "outbound": "Option ADs"
+      },
+      {
+        "geosite": [
+          "whatsapp",
+          "rule-indo",
+          "rule-sosmed",
+          "rule-playstore",
+          "rule-umum",
+          "videoconference"
+        ],
+        "outbound": "Sosmed"
+      },
+      {
+        "geosite": "rule-gaming",
+        "outbound": "Route Port Game"
+      },
+      {
+        "geosite": [
+          "rule-streaming",
+          "oisd-nsfw"
+        ],
+        "outbound": "Streaming"
+      },
+      {
+        "geoip": [
+          "telegram",
+          "twitter",
+          "netflix"
+        ],
+        "outbound": "Streaming"
+      },
+      { 
+        "geoip": "facebook",
+        "outbound": "Sosmed" 
+      },
+      { 
+        "geoip": "google",
+        "outbound": "Internet" 
+      },
+      {
+        "protocol": "stun",
+        "outbound": "Internet"
+      }
+    ],
+    "final": "Internet",
+    "auto_detect_interface": true,
+    "override_android_vpn": true
+  },
+  "experimental": {
+    "clash_api": {
+      "external_controller": "127.0.0.1:9090"
+    }
+  }
     }
