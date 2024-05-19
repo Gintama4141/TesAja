@@ -1,46 +1,36 @@
 {
   "log": {
-    "level": "info",
-    "output": "box.log",
+    "disabled": false,
+    "level": "warn",
     "timestamp": true
+  },
+  "experimental": {
+    "cache_file": {
+      "enabled": true,
+      "path": "cache.db"
+    },
+    "clash_api": {
+      "external_controller": "0.0.0.0:9090",
+      "external_ui": "yacd",
+      "external_ui_download_url": "https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip",
+      "external_ui_download_detour": "Internet",
+      "secret": "",
+      "default_mode": "rule"
+    }
   },
   "dns": {
     "servers": [
       {
         "tag": "Internet-dns",
-        "address": "tcp://1.0.0.1",
+        "address": "1.0.0.1",
         "strategy": "ipv4_only",
         "detour": "Internet"
       },
       {
-        "tag": "Best Latency-dnsID",
-        "address": "tcp://1.0.0.1",
+        "tag": "Best Latency-dns",
+        "address": "1.1.1.1",
         "strategy": "ipv4_only",
-        "detour": "ID"
-      },
-      {
-        "tag": "Best Latency-dnsSG",
-        "address": "tcp://1.0.0.1",
-        "strategy": "ipv4_only",
-        "detour": "SG"
-      },
-      {
-        "tag": "Sosmed-dns",
-        "address": "tcp://1.0.0.1",
-        "strategy": "ipv4_only",
-        "detour": "Sosmed"
-      },
-      {
-        "tag": "Streaming-dns",
-        "address": "tcp://1.0.0.1",
-        "strategy": "ipv4_only",
-        "detour": "Streaming"
-      },
-      {
-        "tag": "Route Port Game-dns",
-        "address": "tcp://1.0.0.1",
-        "strategy": "ipv4_only",
-        "detour": "Route Port Game"
+        "detour": "Best Latency"
       },
       {
         "tag": "direct-dns",
@@ -63,25 +53,8 @@
         "rewrite_ttl": 20
       },
       {
-        "domain_suffix": [
-          "id5.tunnelx.cloud",
-          "id5.tunnelx.cloud",
-          "id5.tunnelx.cloud",
-          "sg4.nekotun.com",
-          "sg4.nekotun.com",
-          "sg4.nekotun.com"
-        ],
-        "server": "direct-dns",
-        "rewrite_ttl": 20
-      },
-      {
         "network": "udp",
         "port": 443,
-        "server": "block-dns",
-        "rewrite_ttl": 20
-      },
-      {
-        "geosite": "rule-malicious",
         "server": "block-dns",
         "rewrite_ttl": 20
       },
@@ -91,65 +64,35 @@
         "rewrite_ttl": 20
       },
       {
-        "outbound": "ID",
-        "server": "Best Latency-dnsID",
-        "rewrite_ttl": 20
-      },
-      {
-        "outbound": "SG",
-        "server": "Best Latency-dnsSG",
-        "rewrite_ttl": 20
-      },
-      {
-        "outbound": "Sosmed",
-        "server": "Sosmed-dns",
-        "rewrite_ttl": 20
-      },
-      {
-        "outbound": "Streaming",
-        "server": "Streaming-dns",
-        "rewrite_ttl": 20
-      },
-      {
-        "outbound": "Route Port Game",
-        "server": "Route Port Game-dns",
-        "rewrite_ttl": 20
-      },
-      {
-        "outbound": "direct",
-        "server": "direct-dns",
-        "rewrite_ttl": 20
-      },
-      {
-        "outbound": "any",
-        "server": "direct-dns",
+        "outbound": "Best Latency",
+        "server": "Best Latency-dns",
         "rewrite_ttl": 20
       }
     ],
     "reverse_mapping": true,
     "strategy": "ipv4_only",
-    "disable_cache": true,
-    "independent_cache": true
+    "independent_cache": true,
+    "disable_cache": true
   },
   "inbounds": [
     {
       "type": "tun",
       "tag": "tun-in",
       "interface_name": "tun0",
-      "mtu": 9000,
       "inet4_address": "172.19.0.1/30",
+      "mtu": 9000,
       "auto_route": true,
       "strict_route": true,
-      "endpoint_independent_nat": true,
       "stack": "system",
+      "endpoint_independent_nat": true,
       "sniff": true
     },
     {
-      "type": "mixed",
-      "tag": "mixed-in",
       "listen": "0.0.0.0",
       "listen_port": 2080,
-      "sniff": true
+      "sniff": true,
+      "tag": "mixed-in",
+      "type": "mixed"
     }
   ],
   "outbounds": [
@@ -157,218 +100,170 @@
       "type": "selector",
       "tag": "Internet",
       "outbounds": [
-        "ID",
-        "SG"
-      ]
-    },
-    {
-      "type": "selector",
-      "tag": "Option ADs",
-      "outbounds": [
-        "block",
-        "Internet"
-      ]
-    },
-    {
-      "type": "selector",
-      "tag": "Sosmed",
-      "outbounds": [
-        "ID",
-        "SG"
-      ]
-    },
-    {
-      "type": "selector",
-      "tag": "Streaming",
-      "outbounds": [
-        "ID",
-        "SG"
-      ]
-    },
-    {
-      "type": "selector",
-      "tag": "Route Port Game",
-      "outbounds": [
-        "ID",
-        "SG"
-      ]
-    },
-    {
-      "type": "selector",
-      "tag": "Option ADs",
-      "outbounds": [
-        "block",
-        "Internet"
+        "Best Latency",
+        "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+1",
+        "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+2",
+        "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+3",
+        "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+4",
+        "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+5"
       ]
     },
     {
       "type": "urltest",
-      "tag": "ID",
+      "tag": "Best Latency",
       "outbounds": [
-        "ID1",
-        "ID2",
-        "ID3"
+        "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+1",
+        "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+2",
+        "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+3",
+        "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+4",
+        "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+5"
       ],
-      "url": "http://www.gstatic.com/generate_204",
-      "interval": "1m",
-      "tolerance": 20
+      "url": "https://detectportal.firefox.com/success.txt",
+      "interval": "1m0s"
     },
     {
-      "type": "urltest",
-      "tag": "SG",
-      "outbounds": [
-        "SG1",
-        "SG2",
-        "SG3"
-      ],
-      "url": "http://www.gstatic.com/generate_204",
-      "interval": "1m",
-      "tolerance": 20
-    },
-    {
+      "tag": "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+1",
       "type": "vless",
-      "tag": "ID1",
-      "domain_strategy": "ipv4_only",
-      "server": "img.email3.vidio.com",
+      "server": "104.18.56.56",
       "server_port": 443,
-      "uuid": "6259c090-0683-4e76-b830-c65216276929",
-      "tls": {
-        "enabled": true,
-        "server_name": "id5.tunnelx.cloud",
-        "insecure": true
-      },
+      "uuid": "bf7e1009-1574-44f7-86df-6cbecd338477",
+      "flow": "",
+      "packet_encoding": "xudp",
       "multiplex": {
+        "enabled": false,
         "protocol": "smux",
         "max_streams": 32
+      },
+      "tls": {
+        "enabled": true,
+        "server_name": "pardazeshvpn-tg18.pages.dev",
+        "insecure": true,
+        "disable_sni": false
       },
       "transport": {
         "type": "ws",
-        "path": "/vless",
+        "path": "/?ed",
         "headers": {
-          "Host": "id5.tunnelx.cloud"
+          "Host": "pardazeshvpn-tg18.pages.dev"
         },
+        "max_early_data": 0,
         "early_data_header_name": "Sec-WebSocket-Protocol"
       },
-      "packet_encoding": "xudp"
+      "domain_strategy": "ipv4_only"
     },
     {
+      "tag": "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+2",
       "type": "vless",
-      "tag": "ID2",
-      "domain_strategy": "ipv4_only",
-      "server": "img.email3.vidio.com",
-      "server_port": 80,
-      "uuid": "6259c090-0683-4e76-b830-c65216276929",
+      "server": "104.18.56.56",
+      "server_port": 443,
+      "uuid": "bf7e1009-1574-44f7-86df-6cbecd338477",
+      "flow": "",
+      "packet_encoding": "xudp",
       "multiplex": {
+        "enabled": false,
         "protocol": "smux",
         "max_streams": 32
+      },
+      "tls": {
+        "enabled": true,
+        "server_name": "pardazeshvpn-tg18.pages.dev",
+        "insecure": true,
+        "disable_sni": false
       },
       "transport": {
         "type": "ws",
-        "path": "/vless",
+        "path": "/?ed",
         "headers": {
-          "Host": "id5.tunnelx.cloud"
+          "Host": "pardazeshvpn-tg18.pages.dev"
         },
+        "max_early_data": 0,
         "early_data_header_name": "Sec-WebSocket-Protocol"
       },
-      "packet_encoding": "xudp"
+      "domain_strategy": "ipv4_only"
     },
     {
+      "tag": "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+3",
       "type": "vless",
-      "tag": "ID3",
-      "domain_strategy": "ipv4_only",
-      "server": "img.email3.vidio.com",
+      "server": "104.18.56.56",
       "server_port": 443,
-      "uuid": "6259c090-0683-4e76-b830-c65216276929",
-      "tls": {
-        "enabled": true,
-        "server_name": "id5.tunnelx.cloud",
-        "insecure": true
-      },
+      "uuid": "c32b1429-92aa-4be7-912e-4d63b0a31fc7",
+      "flow": "",
+      "packet_encoding": "xudp",
       "multiplex": {
+        "enabled": false,
         "protocol": "smux",
         "max_streams": 32
+      },
+      "tls": {
+        "enabled": true,
+        "server_name": "can01.nimserver.top",
+        "insecure": true,
+        "disable_sni": false
       },
       "transport": {
         "type": "grpc",
-        "service_name": "vless",
+        "service_name": "vless-grpc",
         "idle_timeout": "15s",
-        "ping_timeout": "15s"
+        "ping_timeout": "15s",
+        "permit_without_stream": false
       },
-      "packet_encoding": "xudp"
+      "domain_strategy": "ipv4_only"
     },
     {
-      "type": "vmess",
-      "tag": "SG1",
-      "domain_strategy": "ipv4_only",
-      "server": "img.email3.vidio.com",
+      "tag": "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+4",
+      "type": "vless",
+      "server": "104.18.56.56",
       "server_port": 443,
-      "uuid": "c26ea2b7-c1d9-4359-848b-661d9a4dbb9d",
-      "security": "auto",
-      "authenticated_length": true,
-      "tls": {
-        "enabled": true,
-        "server_name": "sg4.nekotun.com",
-        "insecure": true
-      },
+      "uuid": "c32b1429-92aa-4be7-912e-4d63b0a31fc7",
+      "flow": "",
+      "packet_encoding": "xudp",
       "multiplex": {
+        "enabled": false,
         "protocol": "smux",
         "max_streams": 32
       },
-      "transport": {
-        "type": "ws",
-        "path": "/vmess",
-        "headers": {
-          "Host": "sg4.nekotun.com"
-        },
-        "early_data_header_name": "Sec-WebSocket-Protocol"
-      }
-    },
-    {
-      "type": "vmess",
-      "tag": "SG2",
-      "domain_strategy": "ipv4_only",
-      "server": "img.email3.vidio.com",
-      "server_port": 443,
-      "uuid": "c26ea2b7-c1d9-4359-848b-661d9a4dbb9d",
-      "security": "auto",
-      "authenticated_length": true,
       "tls": {
         "enabled": true,
-        "server_name": "sg4.nekotun.com",
-        "insecure": true
-      },
-      "multiplex": {
-        "protocol": "smux",
-        "max_streams": 32
+        "server_name": "can01.nimserver.top",
+        "insecure": true,
+        "disable_sni": false
       },
       "transport": {
         "type": "grpc",
-        "service_name": "vmess",
+        "service_name": "vless-grpc",
         "idle_timeout": "15s",
-        "ping_timeout": "15s"
-      }
+        "ping_timeout": "15s",
+        "permit_without_stream": false
+      },
+      "domain_strategy": "ipv4_only"
     },
     {
-      "type": "vmess",
-      "tag": "SG3",
-      "domain_strategy": "ipv4_only",
-      "server": "img.email3.vidio.com",
-      "server_port": 80,
-      "uuid": "c26ea2b7-c1d9-4359-848b-661d9a4dbb9d",
-      "security": "auto",
-      "authenticated_length": true,
+      "tag": "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+5",
+      "type": "vless",
+      "server": "104.18.56.56",
+      "server_port": 443,
+      "uuid": "c32b1429-92aa-4be7-912e-4d63b0a31fc7",
+      "flow": "",
+      "packet_encoding": "xudp",
       "multiplex": {
+        "enabled": false,
         "protocol": "smux",
         "max_streams": 32
       },
+      "tls": {
+        "enabled": true,
+        "server_name": "can01.nimserver.top",
+        "insecure": true,
+        "disable_sni": false
+      },
       "transport": {
-        "type": "ws",
-        "path": "/vmess",
-        "headers": {
-          "Host": "sg4.nekotun.com"
-        },
-        "early_data_header_name": "Sec-WebSocket-Protocol"
-      }
+        "type": "grpc",
+        "service_name": "vless-grpc",
+        "idle_timeout": "15s",
+        "ping_timeout": "15s",
+        "permit_without_stream": false
+      },
+      "domain_strategy": "ipv4_only"
     },
     {
       "type": "direct",
@@ -384,107 +279,24 @@
     }
   ],
   "route": {
+    "auto_detect_interface": true,
+    "override_android_vpn": true,
+    "final": "Internet",
     "geoip": {
       "download_url": "https://github.com/malikshi/sing-box-geo/releases/latest/download/geoip.db",
-      "download_detour": "SG"
+      "download_detour": "Best Latency"
     },
     "geosite": {
       "download_url": "https://github.com/malikshi/v2ray-rules-dat/releases/latest/download/geosite.db",
-      "download_detour": "SG"
+      "download_detour": "Best Latency"
     },
     "rules": [
       {
-        "port": 53,
-        "outbound": "dns-out"
-      },
-      {
-        "network": "udp",
-        "port": 443,
-        "outbound": "block"
-      },
-      {
-        "domain_suffix": "google.com",
-        "outbound": "Internet"
-      },
-      {
-        "domain_keyword": [
-          "terabox.com",
-          "terabox.fun",
-          "teraboxapp.com",
-          "d0000d.com",
-          "dooood.com",
-          "d000d.com",
-          "doods.pro",
-          "do0d.co",
-          "dood.re",
-          "do0od.com",
-          "doodf.com",
-          "doobs.pro",
-          "poop.com",
-          "pay4fans.com",
-          "ds2play.com",
-          "filemoon.sx"
-        ],
-        "outbound": "Streaming"
-      },
-      {
-        "geosite": [
-          "rule-ads",
-          "oisd-full",
-          "rule-malicious"
-        ],
-        "outbound": "Option ADs"
-      },
-      {
-        "geosite": [
-          "whatsapp",
-          "rule-indo",
-          "rule-sosmed",
-          "rule-playstore",
-          "rule-umum",
-          "videoconference"
-        ],
-        "outbound": "Sosmed"
-      },
-      {
-        "geosite": "rule-gaming",
-        "outbound": "Route Port Game"
-      },
-      {
-        "geosite": [
-          "rule-streaming",
-          "oisd-nsfw"
-        ],
-        "outbound": "Streaming"
-      },
-      {
-        "geoip": [
-          "telegram",
-          "twitter",
-          "netflix"
-        ],
-        "outbound": "Streaming"
-      },
-      { 
-        "geoip": "facebook",
-        "outbound": "Sosmed" 
-      },
-      { 
-        "geoip": "google",
-        "outbound": "Internet" 
-      },
-      {
-        "protocol": "stun",
-        "outbound": "Internet"
+        "outbound": "dns-out",
+        "port": [
+          53
+        ]
       }
-    ],
-    "final": "Internet",
-    "auto_detect_interface": true,
-    "override_android_vpn": true
-  },
-  "experimental": {
-    "clash_api": {
-      "external_controller": "127.0.0.1:9090"
-    }
+    ]
   }
     }
