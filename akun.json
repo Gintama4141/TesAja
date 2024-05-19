@@ -101,28 +101,32 @@
       "tag": "Internet",
       "outbounds": [
         "Best Latency",
-        "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+1",
-        "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+2",
-        "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+3",
-        "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+4",
-        "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+5"
+        "USA+1",
+        "USA+2",
+        "USA+3",
+        "USA+4",
+        "USA+5",
+        "Indonesia 6",
+        "Singapore+7"
       ]
     },
     {
       "type": "urltest",
       "tag": "Best Latency",
       "outbounds": [
-        "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+1",
-        "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+2",
-        "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+3",
-        "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+4",
-        "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+5"
+        "USA+1",
+        "USA+2",
+        "USA+3",
+        "USA+4",
+        "USA+5",
+        "Indonesia 6",
+        "Singapore+7"
       ],
       "url": "https://detectportal.firefox.com/success.txt",
       "interval": "1m0s"
     },
     {
-      "tag": "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+1",
+      "tag": "USA+1",
       "type": "vless",
       "server": "104.18.56.56",
       "server_port": 443,
@@ -152,7 +156,7 @@
       "domain_strategy": "ipv4_only"
     },
     {
-      "tag": "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+2",
+      "tag": "USA+2",
       "type": "vless",
       "server": "104.18.56.56",
       "server_port": 443,
@@ -182,7 +186,7 @@
       "domain_strategy": "ipv4_only"
     },
     {
-      "tag": "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+3",
+      "tag": "USA+3",
       "type": "vless",
       "server": "104.18.56.56",
       "server_port": 443,
@@ -210,7 +214,7 @@
       "domain_strategy": "ipv4_only"
     },
     {
-      "tag": "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+4",
+      "tag": "USA+4",
       "type": "vless",
       "server": "104.18.56.56",
       "server_port": 443,
@@ -238,7 +242,7 @@
       "domain_strategy": "ipv4_only"
     },
     {
-      "tag": "%F0%9F%87%BA%F0%9F%87%B8+United+States+of+America+5",
+      "tag": "USA+5",
       "type": "vless",
       "server": "104.18.56.56",
       "server_port": 443,
@@ -262,6 +266,68 @@
         "idle_timeout": "15s",
         "ping_timeout": "15s",
         "permit_without_stream": false
+      },
+      "domain_strategy": "ipv4_only"
+    },
+    {
+      "tag": "Indonesia 6",
+      "type": "vmess",
+      "server": "104.18.56.56",
+      "server_port": 443,
+      "uuid": "d981094f-be64-47c7-bc9a-3d29ad23d9b4",
+      "security": "auto",
+      "alter_id": 0,
+      "global_padding": false,
+      "authenticated_length": true,
+      "multiplex": {
+        "enabled": false,
+        "protocol": "smux",
+        "max_streams": 32
+      },
+      "tls": {
+        "enabled": true,
+        "server_name": "id.funny-script.cloud",
+        "insecure": true,
+        "disable_sni": false
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/vmesswss",
+        "headers": {
+          "Host": "id.funny-script.cloud"
+        },
+        "max_early_data": 0,
+        "early_data_header_name": "Sec-WebSocket-Protocol"
+      },
+      "domain_strategy": "ipv4_only"
+    },
+    {
+      "tag": "Singapore+7",
+      "type": "vless",
+      "server": "104.18.56.56",
+      "server_port": 443,
+      "uuid": "978e6fa3-4cc2-47fc-8746-586e5874e713",
+      "flow": "",
+      "packet_encoding": "xudp",
+      "multiplex": {
+        "enabled": false,
+        "protocol": "smux",
+        "max_streams": 32
+      },
+      "tls": {
+        "enabled": true,
+        "server_name": "sg-full.privateip.net",
+        "insecure": true,
+        "disable_sni": false
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/VLESS",
+        "headers": {
+          "Host": "sg-full.privateip.net"
+        },
+        "max_early_data": 0,
+        "early_data_header_name": "Sec-WebSocket-Protocol"
       },
       "domain_strategy": "ipv4_only"
     },
